@@ -1,4 +1,4 @@
-POST http://localhost:8080/api/register
+POST http://localhost:8080/auth/register
 Content-Type:  application/json
 
 {
@@ -8,4 +8,13 @@ Content-Type:  application/json
     "ProfilePicture": "http://example.com/profile.jpg",
     "IsVerified": false,
     "emailToken": "random-token"
+}
+
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "Email": "testuser@example.com",
+    "Password": "password123",
 }

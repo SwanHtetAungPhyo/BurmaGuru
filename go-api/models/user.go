@@ -9,3 +9,16 @@ type User struct {
 	IsVerified bool `json:"IsVerfied"`
 	EmailVerificationToken string `json:"emailTOken"`
 }
+
+func NewUser(Id int64,userName, email ,password, profilePicture, VerificationToken string, isVerified bool) *User {
+	return &User{
+		Id: Id, 
+		UserName: userName,
+		Email: email, 
+		Password:  password,
+		ProfilePicture:  profilePicture,
+		IsVerified: isVerified,
+		EmailVerificationToken: VerificationToken,
+	}
+}
+

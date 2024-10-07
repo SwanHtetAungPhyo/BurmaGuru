@@ -35,6 +35,8 @@ github.com/mattn/go-runewidth
 # github.com/rivo/uniseg v0.4.7
 ## explicit; go 1.18
 github.com/rivo/uniseg
+# github.com/sirupsen/logrus v1.9.3
+## explicit; go 1.13
 # github.com/valyala/bytebufferpool v1.0.0
 ## explicit
 github.com/valyala/bytebufferpool
