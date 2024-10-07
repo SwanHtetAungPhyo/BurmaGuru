@@ -9,6 +9,7 @@ func Setup(app *fiber.App) {
         app.Get("/auth/verify-email/:token", VerifyEmail) // Email Verification
         app.Post("/auth/login", Login)              // User Login
 
+        app.Get("/users",GetAllUsers)
         app.Get("/users/:id", GetUser)             // Get User by ID
         app.Put("/users/:id", UpdateUser)          // Update User by ID
         app.Delete("/users/:id", DeleteUser)       // Delete User by ID

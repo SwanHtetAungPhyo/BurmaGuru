@@ -10,9 +10,8 @@ type User struct {
 	EmailVerificationToken string `json:"emailTOken"`
 }
 
-func NewUser(Id int64,userName, email ,password, profilePicture, VerificationToken string, isVerified bool) *User {
+func NewUser(userName, email ,password, profilePicture, VerificationToken string, isVerified bool) *User {
 	return &User{
-		Id: Id, 
 		UserName: userName,
 		Email: email, 
 		Password:  password,

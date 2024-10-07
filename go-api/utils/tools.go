@@ -2,10 +2,12 @@ package utils
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/smtp"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -66,4 +68,12 @@ func SendEmail(to []string, subject, body string) error {
 	}
 	return nil
 
+}
+
+func  LoadSqlFile(filename string)  (string, error){
+	content , err := ioutil.ReadFile(filepath.Join("sql",filename))
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil 
 }

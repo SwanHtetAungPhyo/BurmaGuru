@@ -3,7 +3,9 @@ package services
 import (
 	"errors"
 	"fmt"
+	"strings"
 
+	"github.com/swanhtetaungphyo/burmaguru/databases"
 	"github.com/swanhtetaungphyo/burmaguru/dto"
 	"github.com/swanhtetaungphyo/burmaguru/models"
 	"github.com/swanhtetaungphyo/burmaguru/utils"
@@ -12,36 +14,40 @@ import (
 
 
 var UserArray []models.User
-var nextId = int64(1)
+func RegistrationServices(user *dto.UserDto) (*models.User, error) {
+    if strings.TrimSpace(user.UserName) == "" || strings.TrimSpace(user.Email) == "" || strings.TrimSpace(user.Password) == "" {
+        return nil, errors.New("userName, Email, and Password must be filled")
+    }
 
-func RegistrationServices(user * dto.UserDto) (*models.User, error){
-	
-	if user.UserName == " " || user.Email == " " || user.Password == " " {
-		return nil, errors.New("userName , Email and Password must be filled")
-	}
-	
-	hashedPassword, err := utils.HashPassowrd(user.Password);
-	if  err != nil {
-		return nil, errors.New("failed hash")
-	}
-	user.Password = hashedPassword
+    hashedPassword, err := utils.HashPassowrd(user.Password)
+    if err != nil {
+        return nil, errors.New("failed to hash password")
+    }
+    user.Password = hashedPassword
 
+    insertSql, err := utils.LoadSqlFile("insert_user.sql")
+    if err != nil {
+        return nil, errors.New("failed to load SQL file")
+    }
 
-	for _, existingUser := range UserArray{
-		if existingUser.Email == user.Email {
-			return nil, errors.New("this email is already registered ")
-		}
-	}
-	token := utils.EmailTokenGenerator(10)
-	newUser := models.NewUser(nextId,user.UserName, user.Email,user.Password, user.ProfilePicture,token, false )
-	nextId++
-	UserArray = append(UserArray, *newUser)
-	
-	err = SendVerificationEmail(newUser.Email, token )
-	if err != nil{
-		return &models.User{}, err
-	}
-	return newUser, nil
+    token := utils.EmailTokenGenerator(10)
+    newUser := models.NewUser(user.UserName, user.Email, user.Password, user.ProfilePicture, token, false)
+
+    if databases.DataBase == nil {
+        return nil, errors.New("database connection is not initialized")
+    }
+
+    _, err = databases.DataBase.Exec(insertSql, newUser.UserName, newUser.Email, newUser.Password, newUser.ProfilePicture, newUser.EmailVerificationToken, newUser.IsVerified)
+    if err != nil {
+        return nil, errors.New("failed to register user")
+    }
+
+    err = SendVerificationEmail(newUser.Email, token)
+    if err != nil {
+        return nil, err
+    }
+
+    return newUser, nil
 }
 
 
