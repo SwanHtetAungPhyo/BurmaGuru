@@ -23,7 +23,7 @@ func HashPassowrd(password string) (string, error){
 }
 
 func LogInit() *os.File {
-	file, err := os.OpenFile("./application.log",  os.O_CREATE| os.O_APPEND | os.O_WRONLY, 0666)
+	file, err := os.OpenFile("../application.log",  os.O_CREATE| os.O_APPEND | os.O_WRONLY, 0666)
 	if err != nil{
 		fmt.Printf("Failed to open the log file: %s\n", err)
 		return nil

@@ -7,10 +7,12 @@ type User struct {
 	Password string `json:"Password"`
 	ProfilePicture string `json:"ProfilePicture"`
 	IsVerified bool `json:"IsVerfied"`
+	Interest string `json:"Interest"`
+	Country string `json:"Country"`
 	EmailVerificationToken string `json:"emailTOken"`
 }
 
-func NewUser(userName, email ,password, profilePicture, VerificationToken string, isVerified bool) *User {
+func NewUser(userName, email ,password, profilePicture,Interest, VerificationToken string, isVerified bool) *User {
 	return &User{
 		UserName: userName,
 		Email: email, 

@@ -3,21 +3,33 @@ package databases
 import (
 	"database/sql"
 	"log"
-
-	_ "github.com/mattn/go-sqlite3" // Ensure you import the SQLite driver
+    _ "github.com/go-sql-driver/mysql"
+	"github.com/swanhtetaungphyo/burmaguru/utils"
 )
+
+var SqlQuaries *utils.SqlQuaries
+
 var DataBase *sql.DB
 
-func InitDB(DataSourceName string) error {
+
+func ConnectDB() {
     var err error
-    DataBase, err = sql.Open("sqlite3", DataSourceName)
+
+    DataBase, err = sql.Open("mysql", "root:Swanhtet12@@tcp(localhost:3306)/BurmaGuru")
     if err != nil {
-        log.Printf("Error opening database: %v", err)
-        return err
+        log.Fatalf("Error connecting to the database: %v", err)
     }
-    if err = DataBase.Ping(); err != nil {
-        log.Printf("Error connecting to database: %v", err)
-        return err
+    if err := DataBase.Ping(); err != nil {
+        log.Fatalf("Database not reachable: %v", err)
     }
-    return nil
+}
+
+
+func InitSqlQuaries(filepathname string) {
+    var err error
+    SqlQuaries, err = utils.LoadSqlQuaries(filepathname)
+    if err != nil {
+        log.Printf("Fatal Error: %v", err)
+        return
+    }
 }

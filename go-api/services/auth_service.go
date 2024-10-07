@@ -31,7 +31,8 @@ func RegistrationServices(user *dto.UserDto) (*models.User, error) {
     }
 
     token := utils.EmailTokenGenerator(10)
-    newUser := models.NewUser(user.UserName, user.Email, user.Password, user.ProfilePicture, token, false)
+    newUser := models.NewUser(user.UserName, user.Email, user.Password, user.ProfilePicture, user.Interest, token, false)
+
 
     if databases.DataBase == nil {
         return nil, errors.New("database connection is not initialized")
