@@ -124,3 +124,11 @@ CREATE TABLE EmailVerificationTokens (
     FOREIGN KEY (user_id) REFERENCES Users(id),
     UNIQUE (token) -- Ensure token uniqueness
 );
+
+create  table guides (
+    id int primary key  autoincrement
+    guideId int,
+    title text,
+    content text,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+)

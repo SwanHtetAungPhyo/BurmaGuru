@@ -1,0 +1,29 @@
+# 1. Get All Users
+GET http://localhost:8080/users
+Content-Type: application/json
+
+###
+
+# 2. Get User by ID
+GET http://localhost:8080/users/1
+Content-Type: application/json
+
+###
+
+# 3. Update User by ID
+PUT http://localhost:8080/users/1
+Content-Type: application/json
+
+{
+  "username": "updateduser",
+  "email": "updated@example.com",
+  "country": "Canada",
+  "interests": "reading, traveling",
+  "is_verified": true
+}
+
+###
+
+# 4. Delete User by ID
+DELETE http://localhost:8080/users/1
+Content-Type: application/json
