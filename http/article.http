@@ -1,0 +1,35 @@
+### Test Creating an Article
+POST http://localhost:8080/articles
+Content-Type: application/json
+
+{
+  "title": "Understanding Go Interfaces",
+  "content": "This article explains the concept of interfaces in Go.",
+  "category_id": 1,
+  "country_id": 1,
+  "author_id": 2
+}
+
+### Test Getting All Articles
+GET http://localhost:8080/articles
+Accept: application/json
+
+### Test Getting an Article by ID
+GET http://localhost:8080/articles/1
+Accept: application/json
+
+### Test Updating an Article
+PUT http://localhost:8080/articles/1
+Content-Type: application/json
+
+{
+  "title": "Understanding Go Interfaces (Updated)",
+  "content": "This article explains the concept of interfaces in Go with more details.",
+  "category_id": 1,
+  "country_id": 1,
+  "author_id": 1
+}
+
+### Test Deleting an Article
+DELETE http://localhost:8080/articles/1
+Accept: application/json
