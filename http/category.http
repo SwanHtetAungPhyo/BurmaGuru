@@ -1,0 +1,24 @@
+### Create Category
+POST http://localhost:8080/api/categories
+Content-Type: application/json
+
+{
+  "name": "Test Category2"
+}
+
+### Get Category by ID
+GET http://localhost:8080/categories/1
+
+### Update Category by ID
+PUT http://localhost:8080/categories/1
+Content-Type: application/json
+
+{
+  "name": "Updated Category"
+}
+
+### Delete Category by ID
+DELETE http://localhost:8080/categories/1
+
+### Get All Categories
+GET http://localhost:8080/categories

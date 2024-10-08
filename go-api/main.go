@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/joho/godotenv"
-	"github.com/swanhtetaungphyo/burmaguru/databases"
+	"github.com/swanhtetaungphyo/burmaguru/database"
 	"github.com/swanhtetaungphyo/burmaguru/handler"
 	"github.com/swanhtetaungphyo/burmaguru/utils"
 	"log"
+	"os"
 )
 
 func main() {
@@ -16,15 +18,30 @@ func main() {
 		log.Fatalf("Error loading .env file")
 	}
 
-	databases.ConnectDB()
+	database.ConnectDB()
 
 	logFile := utils.LogInit()
 	if logFile == nil {
 		fmt.Println("Log initialization failed. Exiting program.")
 		return
 	}
-	defer logFile.Close()
+	defer func(logfile *os.File) {
+		err := logfile.Close()
+		if err != nil {
+			return
+		}
+	}(logFile)
 
+	app.Use(limiter.New(limiter.Config{
+		Max:        5,
+		Expiration: 60 * 1000 * 1000 * 1000,
+		KeyGenerator: func(ctx *fiber.Ctx) string {
+			return ctx.IP()
+		},
+		LimitReached: func(ctx *fiber.Ctx) error {
+			return utils.ErrorResponse(ctx, "You have reached the API call limit", fiber.StatusTooManyRequests, "")
+		},
+	}))
 	routes.Setup(app)
 
 	log.Println("Server is starting...")

@@ -5,13 +5,13 @@ import (
 	"log"
 	"time"
 
-	"github.com/swanhtetaungphyo/burmaguru/databases"
+	"github.com/swanhtetaungphyo/burmaguru/database"
 	"github.com/swanhtetaungphyo/burmaguru/models"
 )
 
 // CreateArticleService creates a new article
 func CreateArticleService(article models.Article) (models.Article, error) {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return models.Article{}, sql.ErrNoRows
 	}
@@ -24,7 +24,7 @@ func CreateArticleService(article models.Article) (models.Article, error) {
 	article.CreatedAt = sql.NullTime{Time: time.Now(), Valid: true}
 	article.UpdatedAt = sql.NullTime{Time: time.Now(), Valid: true}
 
-	result, err := databases.DataBase.Exec(query, article.Title, article.Content, article.CategoryID, article.CountryID, article.AuthorID, article.CreatedAt, article.UpdatedAt)
+	result, err := database.DataBase.Exec(query, article.Title, article.Content, article.CategoryID, article.CountryID, article.AuthorID, article.CreatedAt, article.UpdatedAt)
 	if err != nil {
 		log.Printf("Error inserting article: %v", err)
 		return models.Article{}, err
@@ -42,14 +42,14 @@ func CreateArticleService(article models.Article) (models.Article, error) {
 
 // GetArticleByIdService retrieves an article by its ID
 func GetArticleByIdService(id int) (models.Article, error) {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return models.Article{}, sql.ErrNoRows
 	}
 
 	var article models.Article
 	query := "SELECT id, title, content, category_id, country_id, author_id, created_at, updated_at FROM Articles WHERE id = ?"
-	err := databases.DataBase.QueryRow(query, id).Scan(&article.ID, &article.Title, &article.Content, &article.CategoryID, &article.CountryID, &article.AuthorID, &article.CreatedAt, &article.UpdatedAt)
+	err := database.DataBase.QueryRow(query, id).Scan(&article.ID, &article.Title, &article.Content, &article.CategoryID, &article.CountryID, &article.AuthorID, &article.CreatedAt, &article.UpdatedAt)
 	if err != nil {
 		log.Printf("Error retrieving article: %v", err)
 		return models.Article{}, err
@@ -60,7 +60,7 @@ func GetArticleByIdService(id int) (models.Article, error) {
 
 // UpdateArticleService updates an existing article
 func UpdateArticleService(article models.Article) error {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return sql.ErrNoRows
 	}
@@ -70,7 +70,7 @@ func UpdateArticleService(article models.Article) error {
 		UPDATE Articles 
 		SET title = ?, content = ?, category_id = ?, country_id = ?, author_id = ?, updated_at = ? 
 		WHERE id = ?`
-	_, err := databases.DataBase.Exec(query, article.Title, article.Content, article.CategoryID, article.CountryID, article.AuthorID, article.UpdatedAt, article.ID)
+	_, err := database.DataBase.Exec(query, article.Title, article.Content, article.CategoryID, article.CountryID, article.AuthorID, article.UpdatedAt, article.ID)
 	if err != nil {
 		log.Printf("Error updating article: %v", err)
 		return err
@@ -81,13 +81,13 @@ func UpdateArticleService(article models.Article) error {
 
 // DeleteArticleService deletes an article by its ID
 func DeleteArticleService(id int) error {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return sql.ErrNoRows
 	}
 
 	query := "DELETE FROM Articles WHERE id = ?"
-	_, err := databases.DataBase.Exec(query, id)
+	_, err := database.DataBase.Exec(query, id)
 	if err != nil {
 		log.Printf("Error deleting article: %v", err)
 		return err
@@ -97,12 +97,12 @@ func DeleteArticleService(id int) error {
 }
 
 func GetAllArticlesService() ([]models.Article, error) {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return nil, sql.ErrNoRows
 	}
 
-	rows, err := databases.DataBase.Query("SELECT id, title, content, category_id, country_id, author_id, created_at, updated_at FROM Articles")
+	rows, err := database.DataBase.Query("SELECT id, title, content, category_id, country_id, author_id, created_at, updated_at FROM Articles")
 	if err != nil {
 		log.Printf("Error querying articles: %v", err)
 		return nil, err

@@ -5,18 +5,18 @@ import (
 	"errors"
 	"log"
 
-	"github.com/swanhtetaungphyo/burmaguru/databases"
+	"github.com/swanhtetaungphyo/burmaguru/database"
 	"github.com/swanhtetaungphyo/burmaguru/dto"
 	"github.com/swanhtetaungphyo/burmaguru/models"
 )
 
 func GetAllUser() ([]models.User, error) {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return nil, sql.ErrNoRows
 	}
 
-	rows, err := databases.DataBase.Query("SELECT id, username, email, password, interests, is_verified, country FROM Users")
+	rows, err := database.DataBase.Query("SELECT id, username, email, password, interests, is_verified, country FROM Users")
 	if err != nil {
 		log.Printf("Error querying users: %v", err)
 		return nil, err
@@ -37,14 +37,14 @@ func GetAllUser() ([]models.User, error) {
 }
 
 func GetUserByIdService(Id int64) (dto.UserDto, error) {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return dto.UserDto{}, sql.ErrConnDone
 	}
 
 	var user models.User
 	query := "SELECT id, username, email, password, interests, is_verified, country FROM Users WHERE id = ?"
-	err := databases.DataBase.QueryRow(query, Id).Scan(&user.Id, &user.UserName, &user.Email, &user.Password, &user.Interest, &user.IsVerified, &user.Country)
+	err := database.DataBase.QueryRow(query, Id).Scan(&user.Id, &user.UserName, &user.Email, &user.Password, &user.Interest, &user.IsVerified, &user.Country)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			log.Printf("User with ID %d not found", Id)
@@ -64,13 +64,13 @@ func GetUserByIdService(Id int64) (dto.UserDto, error) {
 }
 
 func UpdateUserService(Id int64, updateUserDto dto.UserDto) (dto.UserDto, error) {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return dto.UserDto{}, sql.ErrConnDone
 	}
 
 	query := `UPDATE Users SET username = ?, email = ?, password = ?, interests = ?, is_verified = ?, country = ? WHERE id = ?`
-	_, err := databases.DataBase.Exec(query, updateUserDto.UserName, updateUserDto.Email, updateUserDto.Password, updateUserDto.Interest, updateUserDto.IsVerified, updateUserDto.Country, Id)
+	_, err := database.DataBase.Exec(query, updateUserDto.UserName, updateUserDto.Email, updateUserDto.Password, updateUserDto.Interest, updateUserDto.IsVerified, updateUserDto.Country, Id)
 	if err != nil {
 		log.Printf("Error updating user with ID %d: %v", Id, err)
 		return dto.UserDto{}, err
@@ -80,7 +80,7 @@ func UpdateUserService(Id int64, updateUserDto dto.UserDto) (dto.UserDto, error)
 }
 
 func DeleteUserService(Id int64) (dto.UserDto, error) {
-	if databases.DataBase == nil {
+	if database.DataBase == nil {
 		log.Println("Error: Database connection is nil")
 		return dto.UserDto{}, sql.ErrConnDone
 	}
@@ -91,7 +91,7 @@ func DeleteUserService(Id int64) (dto.UserDto, error) {
 	}
 
 	query := "DELETE FROM Users WHERE id = ?"
-	result, err := databases.DataBase.Exec(query, Id)
+	result, err := database.DataBase.Exec(query, Id)
 	if err != nil {
 		log.Printf("Error deleting user with ID %d: %v", Id, err)
 		return dto.UserDto{}, err

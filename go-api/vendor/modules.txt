@@ -12,8 +12,10 @@ github.com/go-sql-driver/mysql
 # github.com/gofiber/fiber/v2 v2.52.5
 ## explicit; go 1.20
 github.com/gofiber/fiber/v2
+github.com/gofiber/fiber/v2/internal/memory
 github.com/gofiber/fiber/v2/internal/schema
 github.com/gofiber/fiber/v2/log
+github.com/gofiber/fiber/v2/middleware/limiter
 github.com/gofiber/fiber/v2/utils
 # github.com/google/uuid v1.6.0
 ## explicit
@@ -42,11 +44,15 @@ github.com/mattn/go-isatty
 # github.com/mattn/go-runewidth v0.0.16
 ## explicit; go 1.9
 github.com/mattn/go-runewidth
-# github.com/mattn/go-sqlite3 v1.14.24
-## explicit; go 1.19
+# github.com/philhofer/fwd v1.1.2
+## explicit; go 1.15
+github.com/philhofer/fwd
 # github.com/rivo/uniseg v0.4.7
 ## explicit; go 1.18
 github.com/rivo/uniseg
+# github.com/tinylib/msgp v1.1.8
+## explicit; go 1.15
+github.com/tinylib/msgp/msgp
 # github.com/valyala/bytebufferpool v1.0.0
 ## explicit
 github.com/valyala/bytebufferpool

@@ -1,5 +1,5 @@
 # 1. Get All Users
-GET http://localhost:8080/users
+GET http://localhost:8080/api/users
 Content-Type: application/json
 
 ###
