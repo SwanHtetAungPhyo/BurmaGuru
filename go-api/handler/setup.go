@@ -5,6 +5,12 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 )
 
+// @title BurmaGuru
+// @version 1.0
+// @description This is the Prototype server for the BurmaGuru
+// @host localhost:8080
+// @BasePath /api
+
 func Setup(app *fiber.App) {
 	api := app.Group("/api")
 
@@ -37,4 +43,5 @@ func Setup(app *fiber.App) {
 	api.Get("/guides/:id", GetGuide)
 	api.Put("/guides/:id", UpdateGuide)
 	api.Delete("/guides/:id", DeleteGuide)
+
 }

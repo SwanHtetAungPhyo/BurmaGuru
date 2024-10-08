@@ -14,6 +14,18 @@ type LoginParameter struct {
 	Password string `json:"Password"`
 }
 
+// Register godoc
+// @Summary Register a new user
+// @Description Register a new user and send a verification email
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param username body string true "Username"
+// @Param email body string true "Email"
+// @Param password body string true "Password"
+// @Success 201 {object} map[string]interface{}
+// @Failure 400 {object} map[string]interface{}
+// @Router /api/auth/register [post]
 func Register(c *fiber.Ctx) error {
 	var inputUser dto.UserDto
 	if err := c.BodyParser(&inputUser); err != nil {

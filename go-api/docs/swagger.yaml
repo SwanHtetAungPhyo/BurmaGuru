@@ -1,0 +1,44 @@
+info:
+  contact: {}
+paths:
+  /api/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user and send a verification email
+      parameters:
+      - description: Username
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: Password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register a new user
+      tags:
+      - Authentication
+swagger: "2.0"
