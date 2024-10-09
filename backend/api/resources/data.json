@@ -1,0 +1,56 @@
+[
+
+
+
+  {
+    "name": "Canada",
+    "capital": "Ottawa",
+    "continent": "North America",
+    "currency": "CAD",
+    "livingExpense": 1500.00,
+    "lifestyleRating": 8.5,
+    "population": 38000000,
+    "language": "English, French",
+    "averageTemperature": 5.0,
+    "uniqueField": "Diverse cultures and landscapes",
+    "description": "Canada is known for its natural beauty, multicultural society, and high quality of life."
+  },
+  {
+    "name": "Germany",
+    "capital": "Berlin",
+    "continent": "Europe",
+    "currency": "EUR",
+    "livingExpense": 1200.00,
+    "lifestyleRating": 8.0,
+    "population": 83000000,
+    "language": "German",
+    "averageTemperature": 10.0,
+    "uniqueField": "Strong economy and engineering prowess",
+    "description": "Germany is famous for its history, culture, and significant contributions to science and technology."
+  },
+  {
+    "name": "Japan",
+    "capital": "Tokyo",
+    "continent": "Asia",
+    "currency": "JPY",
+    "livingExpense": 2000.00,
+    "lifestyleRating": 9.0,
+    "population": 126000000,
+    "language": "Japanese",
+    "averageTemperature": 15.0,
+    "uniqueField": "Blend of tradition and innovation",
+    "description": "Japan is renowned for its rich culture, advanced technology, and delicious cuisine."
+  },
+  {
+    "name": "Australia",
+    "capital": "Canberra",
+    "continent": "Oceania",
+    "currency": "AUD",
+    "livingExpense": 1700.00,
+    "lifestyleRating": 8.8,
+    "population": 25000000,
+    "language": "English",
+    "averageTemperature": 22.0,
+    "uniqueField": "Stunning natural beauty and wildlife",
+    "description": "Australia is famous for its unique wildlife, beautiful landscapes, and friendly people."
+  }]

@@ -7,17 +7,17 @@ POST http://localhost:8080/api/countries/1
 Content-Type: application/json
 
 {
-  "name": "Test Country",
-  "capital": "Test Capital",
-  "continent": "Test Continent",
-  "currency": "TC",
-  "livingExpense": 1000.00,
-  "lifestyleRating": 8.0,
-  "population": 1000000,
-  "language": "Test Language",
-  "averageTemperature": 25.0,
-  "uniqueField": "Test Unique Field",
-  "description": "Test description"
+  "name": "Japan",
+  "capital": "Tokyo",
+  "continent": "Asia",
+  "currency": "JPY",
+  "livingExpense": 2000.00,
+  "lifestyleRating": 9.0,
+  "population": 126000000,
+  "language": "Japanese",
+  "averageTemperature": 15.0,
+  "uniqueField": "Blend of tradition and innovation",
+  "description": "Japan is renowned for its rich culture, advanced technology, and delicious cuisine."
 }
 
 ### Update an existing country
@@ -39,4 +39,12 @@ Content-Type: application/json
 }
 
 ### Delete an existing country
-DELETE http://localhost:8080/api/countries/1
+POST http://localhost:8080/api/recomendation/
+Content-Type: application/json
+
+{
+  "expectedLivingCost": 2000.00,
+  "expectedLifeStyleRate": 8.0,
+  "expectedAverageTemperature": 20.0,
+  "reasonToMove": "Job opportunity"
+}

@@ -11,8 +11,12 @@ func SetUp(app *fiber.App) {
 	countries.Put("/id", UpdateCountryHandler)
 	countries.Delete("/:id", DeleteCountryHandler)
 
+	recommendation := api.Group("/recomendation")
+	recommendation.Post("/", RecommendationHandler)
+
 	universities := countries.Group("/:country_id/universities")
 	universities.Get("/", GetUniversities)
 	universities.Post("/", CreateUniversityHandler)
 	universities.Put("/:id", UpdateUniversity)
+
 }
