@@ -1,7 +1,9 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/swanhtetaungphyo/burmaguru/database"
 	"github.com/swanhtetaungphyo/burmaguru/dto"
 	"github.com/swanhtetaungphyo/burmaguru/services"
 	"github.com/swanhtetaungphyo/burmaguru/utils"
@@ -9,7 +11,7 @@ import (
 )
 
 func GetAllUsers(c *fiber.Ctx) error {
-	userJsonArr, err := services.GetAllUser()
+	userJsonArr, err := services.GetAllUser(database.DB)
 	if err != nil {
 		return utils.ErrorResponse(c, "User retrieval failed", fiber.ErrBadRequest.Code, err.Error())
 	}
@@ -32,15 +34,14 @@ func GetUser(c *fiber.Ctx) error {
 }
 
 func UpdateUser(c *fiber.Ctx) error {
-	id, err := c.ParamsInt("id")
-	if err != nil {
-		return utils.ErrorResponse(c, "Invalid user ID", fiber.ErrBadRequest.Code, err.Error())
-	}
+	email := c.Params("email")
+
 	var updateUserDto dto.UserDto
 	if err := c.BodyParser(&updateUserDto); err != nil {
 		return utils.ErrorResponse(c, "Invalid request body", fiber.ErrBadRequest.Code, err.Error())
 	}
-	updatedUser, err := services.UpdateUserService(int64(id), updateUserDto)
+
+	updatedUser, err := services.UpdateUserService(email, &updateUserDto)
 	if err != nil {
 		return utils.ErrorResponse(c, "Failed to update user", fiber.ErrInternalServerError.Code, err.Error())
 	}
@@ -53,9 +54,9 @@ func DeleteUser(c *fiber.Ctx) error {
 	if err != nil {
 		return utils.ErrorResponse(c, "Invalid user ID", fiber.ErrBadRequest.Code, err.Error())
 	}
-	user, err := services.DeleteUserService(int64(id))
+	err = services.DeleteUserService(int64(id))
 	if err != nil {
 		return utils.ErrorResponse(c, "Failed to delete user", fiber.ErrInternalServerError.Code, err.Error())
 	}
-	return utils.SuccessResponse(c, "User deleted successfully", 200, user)
+	return utils.SuccessResponse(c, "User deleted successfully", 200, fmt.Sprintf("UserId %v is removed from system", id))
 }

@@ -18,7 +18,9 @@ func main() {
 		log.Fatalf("Error loading .env file")
 	}
 
-	database.ConnectDB()
+	if err := database.SetUpDataBase(); err != nil {
+		return
+	}
 
 	logFile := utils.LogInit()
 	if logFile == nil {
@@ -32,6 +34,7 @@ func main() {
 		}
 	}(logFile)
 
+	database.Migrate()
 	app.Use(limiter.New(limiter.Config{
 		Max:        5,
 		Expiration: 60 * 1000 * 1000 * 1000,

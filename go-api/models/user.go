@@ -1,25 +1,26 @@
 package models
 
+import "gorm.io/gorm"
+
 type User struct {
-	Id int64 `json:"Id"`
-	UserName string `json:"UserName"`
-	Email string `json:"Email"`
-	Password string `json:"Password"`
-	ProfilePicture string `json:"ProfilePicture"`
-	IsVerified bool `json:"IsVerfied"`
-	Interest string `json:"Interest"`
-	Country string `json:"Country"`
-	EmailVerificationToken string `json:"emailTOken"`
+	gorm.Model
+	UserName               string `json:"user_name"`
+	Email                  string `json:"email"`
+	Password               string `json:"password"`
+	ProfilePicture         string `json:"profile_picture"`
+	IsVerified             bool   `json:"is_verified"`
+	Interest               string `json:"interest"`
+	Country                string `json:"country"`
+	EmailVerificationToken string `json:"email_verification_token"`
 }
 
-func NewUser(userName, email ,password, profilePicture,Interest, VerificationToken string, isVerified bool) *User {
+func NewUser(userName, email, password, profilePicture, Interest, VerificationToken string, isVerified bool) *User {
 	return &User{
-		UserName: userName,
-		Email: email, 
-		Password:  password,
-		ProfilePicture:  profilePicture,
-		IsVerified: isVerified,
+		UserName:               userName,
+		Email:                  email,
+		Password:               password,
+		ProfilePicture:         profilePicture,
+		IsVerified:             isVerified,
 		EmailVerificationToken: VerificationToken,
 	}
 }
-

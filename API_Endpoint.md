@@ -65,19 +65,3 @@
 | POST | `/articles/:articleId/like` | Like an article | - | `200 OK` `{ "message": "Article liked successfully." }` |
 | DELETE | `/articles/:articleId/like` | Unlike an article | - | `200 OK` `{ "message": "Article unliked successfully." }` |
 
-## Guides and Resources
-
-| **HTTP Method** | **Endpoint** | **Description** | **Request Body** | **Response** |
-|-----------------|--------------|-----------------|------------------|--------------|
-| GET | `/guides` | Get a list of all guides | - | `200 OK` `[{ "guideId": "int", "title": "string", "category": "string", "country": "string", "content": "text" }]` |
-| GET | `/guides/:id` | Get guide details by ID | - | `200 OK` `{ "guideId": "int", "title": "string", "category": "string", "country": "string", "content": "text" }` |
-| POST | `/guides` | Create a new guide | `{ "title": "string", "categoryId": "int", "countryId": "int", "content": "text" }` | `201 Created` `{ "guideId": "int", "message": "Guide created successfully." }` |
-| PUT | `/guides/:id` | Update a guide by ID | `{ "title": "string", "categoryId": "int", "countryId": "int", "content": "text" }` | `200 OK` `{ "guideId": "int", "message": "Guide updated successfully." }` |
-| DELETE | `/guides/:id` | Delete a guide by ID | - | `200 OK` `{ "message": "Guide deleted successfully." }` |
-
-## Admin Content Verification
-
-| **HTTP Method** | **Endpoint** | **Description** | **Request Body** | **Response** |
-|-----------------|--------------|-----------------|------------------|--------------|
-| GET | `/admin/verify-content` | Get a list of pending articles/guides for admin verification | - | `200 OK` `[{ "contentId": "int", "title": "string", "type": "article/guide", "author": { "authorId": "int", "username": "string" } }]` |
-| PUT | `/admin/verify-content/:id` | Approve or reject pending content | `{ "status": "approved/rejected" }` | `200 OK` `{ "message": "Content verification status updated." }` |

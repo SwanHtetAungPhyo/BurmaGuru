@@ -2,17 +2,26 @@ package utils
 
 import "github.com/gofiber/fiber/v2"
 
-func SuccessResponse(c *fiber.Ctx, message string, statusCode int, data interface{}) error {
-	return c.Status(statusCode).JSON(fiber.Map{
-		"status":  "success",
-		"message": message,
-		"body":    data,
-	})
+type Response struct {
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Body    interface{} `json:"body"`
 }
+
+func SuccessResponse(c *fiber.Ctx, message string, statusCode int, data interface{}) error {
+	response := &Response{
+		Status:  statusCode,
+		Message: message,
+		Body:    data,
+	}
+	return c.Status(statusCode).JSON(response)
+}
+
 func ErrorResponse(c *fiber.Ctx, message string, statusCode int, data interface{}) error {
-	return c.Status(statusCode).JSON(fiber.Map{
-		"status":  "error",
-		"message": message,
-		"Error":   data,
-	})
+	response := &Response{
+		Status:  statusCode,
+		Message: message,
+		Body:    data,
+	}
+	return c.Status(statusCode).JSON(response)
 }
