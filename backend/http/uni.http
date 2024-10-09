@@ -1,0 +1,40 @@
+### Create a new university
+POST http://localhost:8080/api/countries/1/universities/
+Content-Type: application/json
+
+{
+  "name": "Sample University",
+  "country_id": 1,
+  "country_name": "Sample Country",
+  "ranking": 1,
+  "student_count": 25000,
+  "established_year": 2000,
+  "type": "Public",
+  "website": "https://sampleuniversity.edu",
+  "courses": "Engineering, Science, Arts",
+  "address": "123 Sample Street, Sample City",
+  "description": "A sample university for testing purposes.",
+  "unique_feature": "Sample unique feature",
+  "average_tuition": 12000.00
+}
+
+
+### Get all universities for a specific country
+GET http://localhost:8080/api/countries/1/universities/
+Accept: application/json
+
+### Update an existing university
+PUT http://localhost:8080/api/countries/1/universities/1
+Content-Type: application/json
+
+{
+  "name": "Updated University",
+  "ranking": 1,
+  "studentCount": 50000,
+  "establishedYear": 1900,
+  "type": "Public",
+  "website": "https://updated-university.edu",
+  "courses": "Engineering, Arts",
+  "address": "Updated Address",
+  "description": "Updated description"
+}

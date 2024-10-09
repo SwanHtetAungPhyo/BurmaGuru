@@ -9,7 +9,7 @@ import (
 var DB *gorm.DB
 
 func SetUpDataBase() error {
-	dsn := "root:Swanhtet12@@tcp(127.0.0.1:3306)/BurmaGuru?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:Swanhtet12@@tcp(127.0.0.1:3306)/MVPOne?charset=utf8mb4&parseTime=True&loc=Local"
 	var err error
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -19,8 +19,14 @@ func SetUpDataBase() error {
 }
 
 func Migrate() {
-	err := DB.AutoMigrate(&models.Country{})
-	if err != nil {
-		panic("Failed to migrate the database")
+	migrationArray := []interface{}{
+		&models.Country{}, &models.University{}}
+
+	for _, table := range migrationArray {
+		err := DB.AutoMigrate(table)
+		if err != nil {
+			panic("Failed to migrate the database")
+		}
 	}
+
 }

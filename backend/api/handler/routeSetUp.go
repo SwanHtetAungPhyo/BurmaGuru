@@ -4,8 +4,15 @@ import "github.com/gofiber/fiber/v2"
 
 func SetUp(app *fiber.App) {
 	api := app.Group("/api")
-	api.Get("/countries", GetCountryHandler)
-	api.Post("/countries/:id", CreateCountryHandler)
-	api.Put("/countries/:id", UpdateCountryHandler)
-	app.Delete("/countries", DeleteCountryHandler)
+
+	countries := api.Group("/countries")
+	countries.Get("/", GetCountryHandler)
+	countries.Post("/:id", CreateCountryHandler)
+	countries.Put("/id", UpdateCountryHandler)
+	countries.Delete("/:id", DeleteCountryHandler)
+
+	universities := countries.Group("/:country_id/universities")
+	universities.Get("/", GetUniversities)
+	universities.Post("/", CreateUniversityHandler)
+	universities.Put("/:id", UpdateUniversity)
 }

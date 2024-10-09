@@ -1,3 +1,42 @@
-GET  http://localhost:8080/api/countries
+### Get all countries
+GET http://localhost:8080/api/countries/
+Accept: application/json
+
+### Create a new country
+POST http://localhost:8080/api/countries/1
 Content-Type: application/json
 
+{
+  "name": "Test Country",
+  "capital": "Test Capital",
+  "continent": "Test Continent",
+  "currency": "TC",
+  "livingExpense": 1000.00,
+  "lifestyleRating": 8.0,
+  "population": 1000000,
+  "language": "Test Language",
+  "averageTemperature": 25.0,
+  "uniqueField": "Test Unique Field",
+  "description": "Test description"
+}
+
+### Update an existing country
+PUT http://localhost:8080/api/countries/1
+Content-Type: application/json
+
+{
+  "name": "Updated Country",
+  "capital": "Updated Capital",
+  "continent": "Updated Continent",
+  "currency": "UC",
+  "livingExpense": 1500.00,
+  "lifestyleRating": 9.0,
+  "population": 2000000,
+  "language": "Updated Language",
+  "averageTemperature": 30.0,
+  "uniqueField": "Updated Unique Field",
+  "description": "Updated description"
+}
+
+### Delete an existing country
+DELETE http://localhost:8080/api/countries/1
