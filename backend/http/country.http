@@ -3,39 +3,50 @@ GET http://localhost:8080/api/countries/
 Accept: application/json
 
 ### Create a new country
-POST http://localhost:8080/api/countries/1
+POST http://localhost:8080/api/countries/
 Content-Type: application/json
 
 {
-  "name": "Japan",
-  "capital": "Tokyo",
-  "continent": "Asia",
-  "currency": "JPY",
-  "livingExpense": 2000.00,
-  "lifestyleRating": 9.0,
-  "population": 126000000,
-  "language": "Japanese",
-  "averageTemperature": 15.0,
-  "uniqueField": "Blend of tradition and innovation",
-  "description": "Japan is renowned for its rich culture, advanced technology, and delicious cuisine."
+  "Name": "United States",
+  "Capital": "Washington, D.C.",
+  "Continent": "North America",
+  "Currency": "USD",
+  "LivingExpense": 1800.0,
+  "LifeStyleRating": 7.1,
+  "Population": 331000000,
+  "Language": "English",
+  "AverageTemperature": 13.0,
+  "UniqueField": "Diverse Opportunities",
+  "Description": "Known for its cultural diversity and economic opportunities.",
+  "SafetyIndex": 52.7,
+  "HealthcareIndex": 69.1,
+  "CostOfLivingIndex": 70.1,
+  "PollutionIndex": 56.0,
+  "ClimateType": "Varied",
+  "EconomicFreedomRank": 15
 }
-
 ### Update an existing country
 PUT http://localhost:8080/api/countries/1
 Content-Type: application/json
 
 {
-  "name": "Updated Country",
-  "capital": "Updated Capital",
-  "continent": "Updated Continent",
-  "currency": "UC",
-  "livingExpense": 1500.00,
-  "lifestyleRating": 9.0,
-  "population": 2000000,
-  "language": "Updated Language",
-  "averageTemperature": 30.0,
-  "uniqueField": "Updated Unique Field",
-  "description": "Updated description"
+  "Name": "United States",
+  "Capital": "Washington, D.C.",
+  "Continent": "North America",
+  "Currency": "USD",
+  "LivingExpense": 1800.0,
+  "LifeStyleRating": 7.1,
+  "Population": 331000000,
+  "Language": "English",
+  "AverageTemperature": 13.0,
+  "UniqueField": "Diverse Opportunities",
+  "Description": "Known for its cultural diversity and economic opportunities.",
+  "SafetyIndex": 52.7,
+  "HealthcareIndex": 69.1,
+  "CostOfLivingIndex": 70.1,
+  "PollutionIndex": 56.0,
+  "ClimateType": "Varied",
+  "EconomicFreedomRank": 15
 }
 
 ### Delete an existing country

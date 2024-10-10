@@ -20,7 +20,9 @@ func SetUpDataBase() error {
 
 func Migrate() {
 	migrationArray := []interface{}{
-		&models.Country{}, &models.University{}}
+		&models.Country{}, &models.University{},
+		&models.Resource{},
+	}
 
 	for _, table := range migrationArray {
 		err := DB.AutoMigrate(table)

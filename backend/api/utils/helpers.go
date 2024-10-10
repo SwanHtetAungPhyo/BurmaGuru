@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"log"
@@ -45,4 +46,15 @@ func DbEnvload() (string, string, string) {
 func CurrentFunction() string {
 	pc, _, _, _ := runtime.Caller(1)
 	return runtime.FuncForPC(pc).Name()
+}
+
+func LogInit() *os.File {
+	file, err := os.OpenFile("../application.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	if err != nil {
+		fmt.Printf("Failed to open the log file: %s\n", err)
+		return nil
+	}
+	log.SetOutput(file)
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+	return file
 }

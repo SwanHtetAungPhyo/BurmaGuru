@@ -8,6 +8,7 @@ import (
 )
 
 func CreateCountry(country models.Country) error {
+
 	if err := db.DB.Create(&country).Error; err != nil {
 		log.Printf("Error in %v: %v", utils.CurrentFunction(), err.Error())
 		return err

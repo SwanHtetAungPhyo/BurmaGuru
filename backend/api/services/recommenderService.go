@@ -1,22 +1,16 @@
 package services
 
 import (
+	"log"
+	"math"
+
 	"github.com/swanhtetaungphyo/burmaGuru/db"
 	"github.com/swanhtetaungphyo/burmaGuru/dto"
 	"github.com/swanhtetaungphyo/burmaGuru/models"
 	"github.com/swanhtetaungphyo/burmaGuru/utils"
-	"log"
 )
 
-const (
-	lifeStyleWeight     = 0.3
-	livingExpenseWeight = 0.5
-	averageTempWeight   = 0.2
-	minTemp             = -20.0
-	maxTemp             = 20
-)
-
-func Recommender(preference dto.UserPreference) ([]dto.RecommendationFlag, interface{}) {
+func Recommender(preference dto.UserPreference) ([]dto.RecommendationFlag, error) {
 	var recommendedCountries []models.Country
 	var recommendations []dto.RecommendationFlag
 
@@ -26,29 +20,62 @@ func Recommender(preference dto.UserPreference) ([]dto.RecommendationFlag, inter
 	}
 
 	for _, country := range recommendedCountries {
-		possibilty := calculatePossibility(preference, country)
-		if possibilty >= 30.000 {
+		possibility := calculatePossibility(preference, country)
+		if possibility >= 60.0 { // Include only countries with possibility score above 30%
 			recommendations = append(recommendations, dto.RecommendationFlag{
 				Country:     country.Name,
-				Possibility: possibilty,
+				Possibility: possibility,
 			})
 		}
-
 	}
+
 	return recommendations, nil
 }
 
 func calculatePossibility(preference dto.UserPreference, country models.Country) float64 {
-	lifestyleScore := (float64(country.LifeStyleRating) / float64(preference.ExpectedLifeStyleRate)) * lifeStyleWeight
-	expenseScore := ((preference.ExpectedLivingCost - country.LivingExpense) / preference.ExpectedLivingCost) * livingExpenseWeight
-	temperatureScore := (country.AverageTemperature / preference.ExpectedAverageTemperature) * averageTempWeight
+	// Set default weights
+	lifeStyleWeight := 0.3
+	livingExpenseWeight := 0.5
+	averageTempWeight := 0.2
+	safetyWeight := 0.15
+	healthcareWeight := 0.15
 
-	possibility := lifestyleScore + expenseScore + temperatureScore
-	if possibility < 0 {
+	// Adjust weights based on ReasonToMove
+	adjustWeights(&lifeStyleWeight, &livingExpenseWeight, &averageTempWeight, &safetyWeight, &healthcareWeight, preference.ReasonToMove)
+
+	// Compute individual scores, handling division by zero
+	lifestyleScore := safeDivision(float64(country.LifeStyleRating), float64(preference.ExpectedLifeStyleRate)) * lifeStyleWeight
+	expenseScore := safeDivision(preference.ExpectedLivingCost-country.LivingExpense, preference.ExpectedLivingCost) * livingExpenseWeight
+	temperatureScore := safeDivision(country.AverageTemperature, preference.ExpectedAverageTemperature) * averageTempWeight
+	safetyScore := safeDivision(float64(country.SafetyIndex), float64(preference.PreferredSafetyIndex)) * safetyWeight
+	healthcareScore := safeDivision(float64(country.HealthcareIndex), float64(preference.PreferredHealthcareIndex)) * healthcareWeight
+
+	// Sum up the scores
+	possibility := lifestyleScore + expenseScore + temperatureScore + safetyScore + healthcareScore
+
+	// Normalize and return possibility as percentage
+	possibility = math.Min(math.Max(possibility, 0), 1) // Ensure value is between 0 and 1
+	return possibility * 100
+}
+
+func adjustWeights(lifeStyleWeight, livingExpenseWeight, averageTempWeight, safetyWeight, healthcareWeight *float64, reason string) {
+	switch reason {
+	case "Education":
+		*livingExpenseWeight = 0.4
+		*healthcareWeight = 0.25
+	case "Employment":
+		*livingExpenseWeight = 0.4
+		*safetyWeight = 0.3
+	case "Retirement":
+		*lifeStyleWeight = 0.5
+		*safetyWeight = 0.3
+	}
+}
+
+// safeDivision performs division and handles division by zero.
+func safeDivision(numerator, denominator float64) float64 {
+	if denominator == 0 {
 		return 0
 	}
-	if possibility > 1 {
-		return 1
-	}
-	return possibility * 100
+	return numerator / denominator
 }

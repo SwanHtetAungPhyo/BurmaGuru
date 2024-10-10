@@ -1,0 +1,9 @@
+2024/10/10 23:15:54 ResourcesService.go:12: github.com/swanhtetaungphyo/burmaGuru/services.CreateResource have error : Error 1146 (42S02): Table 'mvpone.resources' doesn't exist
+2024/10/10 23:28:54 ResourcesService.go:21: github.com/swanhtetaungphyo/burmaGuru/services.GetAllResources have error 
+  : unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users"); unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2024/10/10 23:29:11 ResourcesService.go:21: github.com/swanhtetaungphyo/burmaGuru/services.GetAllResources have error 
+  : unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users"); unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2024/10/10 23:29:36 ResourcesService.go:21: github.com/swanhtetaungphyo/burmaGuru/services.GetAllResources have error 
+  : unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users"); unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2024/10/10 23:32:17 ResourcesService.go:21: github.com/swanhtetaungphyo/burmaGuru/services.GetAllResources have error 
+  : record not found

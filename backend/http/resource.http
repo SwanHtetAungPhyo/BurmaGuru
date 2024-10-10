@@ -1,0 +1,64 @@
+### 1. Create a New Resource
+POST http://localhost:8080/api/countries/1/resources
+Content-Type: application/json
+
+{
+  "title": "Legal Guidelines for Studying Abroad",
+  "description": "Important legal information for students.",
+  "link": null,
+  "photo": null,
+  "country_id": 1
+}
+
+### 2. Create Resource with Missing Fields
+POST http://localhost:8080/api/countries/1/resources
+Content-Type: application/json
+
+{
+  "description": "Important legal information for students."
+}
+
+### 3. Get All Resources
+GET http://localhost:8080/api/countries/1/resources
+Content-Type: application/json
+
+### 4. Get All Resources for Non-Existing Country
+GET http://localhost:8080/api/countries/999/resources
+Content-Type: application/json
+
+### 5. Update an Existing Resource
+PUT http://localhost:8080/api/countries/1/resources/1
+Content-Type: application/json
+
+{
+  "title": "Updated Legal Guidelines for Studying Abroad",
+  "description": "Updated important legal information for students.",
+  "link": "http://example.com",
+  "photo": "http://example.com/photo.jpg",
+  "country_id": 1
+}
+
+### 6. Update Non-Existing Resource
+PUT http://localhost:8080/api/countries/1/resources/999
+Content-Type: application/json
+
+{
+  "title": "Non-Existing Resource",
+  "description": "This resource does not exist."
+}
+
+### 7. Delete a Resource
+DELETE http://localhost:8080/api/countries/1/resources/1
+Content-Type: application/json
+
+### 8. Delete Non-Existing Resource
+DELETE http://localhost:8080/api/countries/1/resources/999
+Content-Type: application/json
+
+### 9. Delete All Resources for a Country
+DELETE http://localhost:8080/api/countries/1/resources
+Content-Type: application/json
+
+### 10. Get Resources After Deletion
+GET http://localhost:8080/api/countries/1/resources
+Content-Type: application/json

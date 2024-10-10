@@ -3,11 +3,12 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
+	"github.com/swanhtetaungphyo/burmaGuru/config"
 	"github.com/swanhtetaungphyo/burmaGuru/db"
-	"github.com/swanhtetaungphyo/burmaGuru/handler"
 	"github.com/swanhtetaungphyo/burmaGuru/utils"
 	"log"
 	"net"
+	"os"
 )
 
 func main() {
@@ -20,6 +21,17 @@ func main() {
 
 	db.Migrate()
 
+	logFile := utils.LogInit()
+	if logFile == nil {
+		log.Printf("LogFile initializaion is Failed ......")
+		return
+	}
+	defer func(logfile *os.File) {
+		if err := logfile.Close(); err != nil {
+			log.Printf("Error is in %v and reason is :%v ", utils.CurrentFunction(), err.Error())
+			return
+		}
+	}(logFile)
 	applicaion.Use(limiter.New(limiter.Config{
 		Max:        10,
 		Expiration: 60 * 1000 * 1000 * 1000,
@@ -31,7 +43,7 @@ func main() {
 		},
 	}))
 
-	handler.SetUp(applicaion)
+	config.SetUp(applicaion)
 
 	applicaion.Listen(":8080").Error()
 }
