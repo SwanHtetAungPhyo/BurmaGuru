@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	"github.com/swanhtetaungphyo/burmaGuru/dto"
+	"github.com/swanhtetaungphyo/burmaGuru/models"
 	"log"
 	"os"
 	"runtime"
@@ -57,4 +59,30 @@ func LogInit() *os.File {
 	log.SetOutput(file)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	return file
+}
+
+func ToUser(userDTO dto.UserDTO) models.User {
+	return models.User{
+		UserName:               userDTO.UserName,
+		Email:                  userDTO.Email,
+		Password:               userDTO.Password,
+		ProfilePicture:         userDTO.ProfilePicture,
+		IsVerified:             userDTO.IsVerified,
+		Interest:               userDTO.Interest,
+		Country:                userDTO.Country,
+		EmailVerificationToken: userDTO.EmailVerificationToken,
+	}
+}
+
+func ToUserDTO(user models.User) dto.UserDTO {
+	return dto.UserDTO{
+		UserName:               user.UserName,
+		Email:                  user.Email,
+		Password:               user.Password,
+		ProfilePicture:         user.ProfilePicture,
+		IsVerified:             user.IsVerified,
+		Interest:               user.Interest,
+		Country:                user.Country,
+		EmailVerificationToken: user.EmailVerificationToken,
+	}
 }

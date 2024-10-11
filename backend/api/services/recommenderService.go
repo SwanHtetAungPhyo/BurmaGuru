@@ -1,11 +1,11 @@
 package services
 
 import (
+	"github.com/swanhtetaungphyo/burmaGuru/dto"
 	"log"
 	"math"
 
 	"github.com/swanhtetaungphyo/burmaGuru/db"
-	"github.com/swanhtetaungphyo/burmaGuru/dto"
 	"github.com/swanhtetaungphyo/burmaGuru/models"
 	"github.com/swanhtetaungphyo/burmaGuru/utils"
 )

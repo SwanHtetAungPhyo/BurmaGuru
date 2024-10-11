@@ -23,3 +23,7 @@ deps:
 	@echo "Installing the depedencies..."
 	go mod tidy
 	go mod vendor
+
+.PHONY: docs
+docs:
+	aglio -i api.apib -o api-docs.html

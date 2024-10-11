@@ -21,7 +21,7 @@ func SetUpDataBase() error {
 func Migrate() {
 	migrationArray := []interface{}{
 		&models.Country{}, &models.University{},
-		&models.Resource{},
+		&models.Resource{}, &models.User{},
 	}
 
 	for _, table := range migrationArray {

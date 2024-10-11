@@ -33,6 +33,5 @@ func UpdateResourcesSer(countryId uint, resource models.Resource) interface{} {
 }
 
 func DeleteResourceSer(countryId uint) error {
-
 	return db.DB.Model(&models.Resource{}).Where("country_id = ?").Delete(&models.Resource{}).Error
 }
