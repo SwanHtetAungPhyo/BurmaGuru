@@ -1,4 +1,4 @@
-2024/10/10 23:15:54 ResourcesService.go:12: github.com/swanhtetaungphyo/burmaGuru/services.CreateResource have error : Error 1146 (42S02): Table 'mvpone.resources' doesn't exist
+d2024/10/10 23:15:54 ResourcesService.go:12: github.com/swanhtetaungphyo/burmaGuru/services.CreateResource have error : Error 1146 (42S02): Table 'mvpone.resources' doesn't exist
 2024/10/10 23:28:54 ResourcesService.go:21: github.com/swanhtetaungphyo/burmaGuru/services.GetAllResources have error 
   : unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users"); unsupported data type: where=?: Table not set, please set it like: db.Model(&user) or db.Table("users")
 2024/10/10 23:29:11 ResourcesService.go:21: github.com/swanhtetaungphyo/burmaGuru/services.GetAllResources have error 
@@ -9,3 +9,8 @@
   : record not found
 2024/10/11 21:46:02 userService.go:64: No country name found for IP: 192.168.0.181
 2024/10/11 21:46:02 userService.go:35: No country name found for IP: 192.168.0.181
+2024/10/12 18:16:05 helpers.go:85: time: unknown unit "d" in duration "7d"
+2024/10/12 18:16:16 helpers.go:85: time: unknown unit "d" in duration "7d"
+2024/10/12 18:16:59 helpers.go:85: time: unknown unit "d" in duration "7d"
+2024/10/12 18:19:18 helpers.go:85: time: unknown unit "min" in duration "15min"
+2024/10/12 18:28:10 userService.go:25: github.com/swanhtetaungphyo/burmaGuru/services.GetUser : record not found

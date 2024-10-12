@@ -3,12 +3,14 @@ package utils
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/joho/godotenv"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/swanhtetaungphyo/burmaGuru/dto"
 	"github.com/swanhtetaungphyo/burmaGuru/models"
+	"golang.org/x/crypto/bcrypt"
 	"log"
 	"os"
 	"runtime"
+	"time"
 )
 
 type Response struct {
@@ -29,20 +31,9 @@ func ApiResponse(ctx *fiber.Ctx, statuscode int, message string, data interface{
 	return ctx.Status(statuscode).JSON(responseBody)
 }
 
-func EmptyMap() map[string]string {
-	mapp := make(map[string]string)
-	return mapp
-}
-
-func DbEnvload() (string, string, string) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Printf("Error in %v is %v ", CurrentFunction(), err)
-	}
-	DbUser, DbPassword, DbName := os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_NAME")
-	return DbUser, DbPassword, DbName
+func CompareHashAndPassword(hashedPassword string, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	return err == nil
 }
 
 func CurrentFunction() string {
@@ -85,4 +76,22 @@ func ToUserDTO(user models.User) dto.UserDTO {
 		Country:                user.Country,
 		EmailVerificationToken: user.EmailVerificationToken,
 	}
+}
+
+func GenereteTokens(tokenType string, username string, role string, expiration string) (string, error) {
+	secret := os.Getenv("JWT_SECRET")
+	duration, err := time.ParseDuration(expiration)
+	if err != nil {
+		log.Fatalf("%v", err.Error())
+		return "", err
+	}
+
+	claims := jwt.MapClaims{
+		"exp":  time.Now().Add(duration).Unix(),
+		"name": username,
+		"role": role,
+		"type": tokenType,
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(secret))
 }

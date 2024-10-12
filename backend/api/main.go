@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/swanhtetaungphyo/burmaGuru/config"
 	"github.com/swanhtetaungphyo/burmaGuru/db"
+	"github.com/swanhtetaungphyo/burmaGuru/middleware"
 	"github.com/swanhtetaungphyo/burmaGuru/utils"
 	"log"
 	"net"
@@ -13,6 +14,8 @@ import (
 
 func main() {
 	applicaion := fiber.New()
+
+	config.LoadEnv()
 
 	if err := db.SetUpDataBase(); err != nil {
 		log.Printf("Error in %v is %v", utils.CurrentFunction(), err.Error())
@@ -42,6 +45,8 @@ func main() {
 			return utils.ApiResponse(ctx, fiber.StatusTooManyRequests, "API call reaches the limit", net.Interface{})
 		},
 	}))
+
+	applicaion.Use("/auth", middleware.JwtProtected())
 
 	config.SetUp(applicaion)
 

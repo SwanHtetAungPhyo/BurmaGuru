@@ -14,6 +14,8 @@ import (
 	"os"
 )
 
+const role = "USER"
+
 // GetUser retrieves a user by their ID.
 // It returns a UserDTO and an error if the user is not found or if there is a database error.
 func GetUser(id int) (dto.UserDTO, error) {
@@ -43,7 +45,7 @@ func CreateUser(user dto.UserDTO) error {
 	}
 
 	userToCreate.Password, _ = hashPassword(user.Password)
-
+	userToCreate.Role = role
 	if err := db.DB.Create(&userToCreate).Error; err != nil {
 		log.Fatalf("%v : %v", utils.CurrentFunction(), err)
 		return err

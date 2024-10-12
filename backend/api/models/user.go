@@ -8,8 +8,9 @@ import (
 type User struct {
 	gorm.Model
 	UserName               string `gorm:"column:user_name" json:"user_name"`
-	Email                  string `gorm:"column:email" json:"email"`
+	Email                  string `gorm:"unique,not null,column:email" json:"email"`
 	Password               string `gorm:"column:password" json:"password"`
+	Role                   string `gorm:"column:role" json:"role"`
 	ProfilePicture         string `gorm:"column:profile_picture" json:"profile_picture"`
 	IsVerified             bool   `gorm:"column:is_verified" json:"is_verified"`
 	Interest               string `gorm:"column:interest" json:"interest"`

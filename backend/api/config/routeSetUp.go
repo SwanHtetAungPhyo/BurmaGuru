@@ -10,7 +10,7 @@ func SetUp(app *fiber.App) {
 
 	authentication := api.Group("/auth")
 	authentication.Post("/register", handler.RegisterHandler)
-	//authentication.Post("/login", handler.LoginHandler)
+	authentication.Post("/login", handler.LoginHandler)
 	//authentication.Post("/logout")
 	//authentication.Post("/recoverPassword")
 	authentication.Post("/verify", handler.VerifyEmail)

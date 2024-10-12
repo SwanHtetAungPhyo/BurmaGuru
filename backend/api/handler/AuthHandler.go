@@ -18,9 +18,23 @@ func RegisterHandler(ctx *fiber.Ctx) error {
 	return utils.ApiResponse(ctx, 200, "User registration is successful", "")
 }
 
-//func LoginHandler(ctx *fiber.Ctx) error {
-//
-//}
+func LoginHandler(ctx *fiber.Ctx) error {
+	loginData := new(dto.LoginRequest) // Use dto.LoginRequest
+
+	if err := ctx.BodyParser(loginData); err != nil {
+		return utils.ApiResponse(ctx, fiber.StatusBadRequest, "Cannot parse body", nil)
+	}
+
+	accessToken, refreshToken, err := services.Login(loginData)
+	if err != nil {
+		return utils.ApiResponse(ctx, fiber.StatusUnauthorized, "Login failed", nil)
+	}
+
+	return utils.ApiResponse(ctx, fiber.StatusOK, "Login successful", fiber.Map{
+		"access_token":  accessToken,
+		"refresh_token": refreshToken,
+	})
+}
 
 func VerifyEmail(ctx *fiber.Ctx) error {
 	token := ctx.Query("token")

@@ -13,3 +13,8 @@ type UserDTO struct {
 	Country                string `json:"country,omitempty"`
 	EmailVerificationToken string `json:"email_verification_token,omitempty"`
 }
+
+type LoginRequest struct {
+	Username string `json:"email"`
+	Password string `json:"password"`
+}
